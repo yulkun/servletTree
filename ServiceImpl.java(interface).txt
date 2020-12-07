@@ -1,0 +1,20 @@
+package Service;
+
+import java.util.List;
+
+import Dao.Dao;
+import Dao.DaoImpl;
+import Dto.MemberVO;
+
+public class ServiceImpl implements Service {
+	Dao dao = new DaoImpl();
+	
+	// R
+	public List<MemberVO> selectKey(int parentKey) throws Exception {
+		return dao.selectKey(parentKey);
+	}
+	
+	public List<MemberVO> selectOneId(int id) throws Exception {
+		return dao.selectOneId(id);
+	}
+}

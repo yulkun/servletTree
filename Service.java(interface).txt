@@ -1,0 +1,10 @@
+package Service;
+
+import java.util.List;
+import Dto.MemberVO;
+
+public interface Service {
+	public List<MemberVO> selectKey(int parentKey) throws Exception;
+	
+	public List<MemberVO> selectOneId(int id) throws Exception;
+}

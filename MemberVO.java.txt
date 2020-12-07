@@ -1,0 +1,49 @@
+package Dto;
+
+public class MemberVO {
+	private int id;
+	private String title;
+	private String content;
+	private int parentKey;
+	private int levels;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public int getParentKey() {
+		return parentKey;
+	}
+
+	public void setParentKey(int parentKey) {
+		this.parentKey = parentKey;
+	}
+
+	public int getLevel() {
+		return levels;
+	}
+
+	public void setLevel(int levels) {
+		this.levels = levels;
+	}
+}

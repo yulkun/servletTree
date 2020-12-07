@@ -1,0 +1,73 @@
+	document.addEventListener("DOMContentLoaded", function(){
+		var list = document.getElementById('list');
+		list.addEventListener("click", function(e) {
+			var targetId = e.target.id;
+			if (targetId == "list") {
+				id = 0;
+			} else {
+				var a = targetId;
+				id = a.substr(a.length - 1, 1);
+			}
+			
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("GET", "select.do?id=" + id); // GET방식으로 select3.do를 간다.
+			xhttp.onload = function() {
+				/* xhttp.readyState == 4 : 데이터 전부 받은 상태 */
+				/* xhttp.status == 200 : 서버 요청 성공 */
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					var memberList = xhttp.responseText;
+					var memberVO = memberList.split('/');
+					var member = [];
+					for (var i = 0; i < memberVO.length; i++) {
+						member.push(memberVO[i].split(','));
+						
+						/* member[~][0] : id,  member[~][1] : title, member[~][2] : content,
+						member[~][3] : parentKey, member[~][4] : levels */
+						// div 생성
+						if (member[i][4] == 0) {
+							var div = document.createElement('div');
+						} else {
+							var div = document.createElement('div');
+							var atag = document.createElement('a');
+						}
+						var text = document.createTextNode('> ' + member[i][1]); // text 엘리먼트 생성
+
+						var ids = 'menu' + member[i][0].trim();
+						var className = 'menu' + member[i][3];
+
+						div.id = ids.replace("\n", "");
+						div.className = className.replace(" ", "");
+						
+						// div 엘리먼트에 text를 자식으로 추가 (div 태그 사이에 존재)
+						if (member[i][4] == 0) {
+							div.appendChild(text);
+				    	} else { // 가장 하위 요소인 경우 atag는 속성도 추가
+				    		atag.setAttribute('href', './selectView.do?id=' + member[i][0]);
+				    		atag.setAttribute("style", "color: #FE9A2E;text-decoration: none;");
+							atag.appendChild(text);
+						}
+
+						// 만든 div를 추가
+						if (document.querySelector("#" + ids)) { // id가 존재하는 경우(중복방지)
+							var child = document.getElementById(ids);
+							var mother = child.parentNode;
+							mother.removeChild(child);
+						} else {
+							if (id == 0) { // 처음 id가 0일 때 list 밑에 만든 div를 추가
+								list.appendChild(div);
+							} else {
+								var parent = document.querySelector("#" + div.className);
+								if (member[i][4] == 0) {
+									parent.appendChild(div);
+								} else { // member[i][4] == 1일 때
+									div.appendChild(atag);
+									parent.appendChild(div);
+								}
+							}
+						}
+					}
+				}
+			};
+			xhttp.send();
+		});
+	});

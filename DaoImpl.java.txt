@@ -1,0 +1,127 @@
+package Dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import Dto.MemberVO;
+
+// 실제 쿼리문 호출
+public class DaoImpl implements Dao {
+	
+	// 부모 키 select
+	public List<MemberVO> selectKey(int parentKey) {
+		Connection con = null; // Connection : 연결하고 끊는 객체
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할
+		ResultSet rs = null; // 명령에 대한 반환값
+
+		String sql = "SELECT * FROM MENU2 WHERE PARENTKEY = " + parentKey + "ORDER BY ID";
+		List<MemberVO> memberList = new ArrayList<>();
+
+		con = getConnection();
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				MemberVO memberVO = new MemberVO();
+				memberVO.setId(rs.getInt(1));
+				memberVO.setTitle(rs.getString(2));
+				memberVO.setContent(rs.getString(3));
+				memberVO.setParentKey(rs.getInt(4));
+				memberVO.setLevel(rs.getInt(5));
+				
+				memberList.add(memberVO);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println(e);
+		} finally {
+			closeAll(con, pstmt, rs);
+		}
+		return memberList;
+	}
+	
+	// 본인 id select
+	public List<MemberVO> selectOneId(int id) {
+		Connection con = null; // Connection : 연결하고 끊는 객체
+		PreparedStatement pstmt = null; // SQL 구문을 실행하는 역할
+		ResultSet rs = null; // 명령에 대한 반환값
+
+		String sql = "SELECT * FROM MENU2 WHERE ID = " + id + "ORDER BY ID";
+		List<MemberVO> memberList = new ArrayList<>();
+
+		con = getConnection();
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				MemberVO memberVO = new MemberVO();
+				memberVO.setId(rs.getInt(1));
+				memberVO.setTitle(rs.getString(2));
+				memberVO.setContent(rs.getString(3));
+				memberVO.setParentKey(rs.getInt(4));
+				memberVO.setLevel(rs.getInt(5));
+				
+				memberList.add(memberVO);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println(e);
+		} finally {
+			closeAll(con, pstmt, rs);
+		}
+		return memberList;
+	}
+	
+	public static Connection getConnection() {
+		Connection conn = null;
+		try {
+			String user = "testuser";
+			String pw = "testuser";
+			String url = "jdbc:oracle:thin:@172.16.88.3:11521:orcl";
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(url, user, pw);
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println("DB cnfe: " + cnfe.toString());
+		} catch (SQLException sqle) {
+			System.out.println("DB sqle: " + sqle.toString());
+		} catch (Exception e) {
+			System.out.println("Unkonwn error");
+			e.printStackTrace();
+		}
+		return conn;
+	}
+
+	public static void closeAll(Connection con, PreparedStatement pstmt, ResultSet rs) {
+		 if (rs != null) {
+             try {
+                 rs.close();
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+         }
+         if (pstmt != null) {
+             try {
+            	 pstmt.close();
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+         }
+         if (con != null) {
+             try {
+                 con.close();
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+         }
+	}
+}

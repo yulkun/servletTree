@@ -1,0 +1,20 @@
+<%@page import="Dto.MemberVO"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+    request.setCharacterEncoding("UTF-8");
+	List<MemberVO> memberList = (List<MemberVO>) request.getAttribute("memberList");
+	for (int i = 0; i < memberList.size(); i++) {
+    	MemberVO memberVO = new MemberVO();
+	  	memberVO = memberList.get(i);
+	  	out.print(memberVO.getId() + ", ");
+	  	out.print(memberVO.getTitle() + ", ");
+	   	out.print(memberVO.getContent() + ", ");
+		out.print(memberVO.getParentKey() + ", ");
+		out.print(memberVO.getLevel());
+		if (memberList.size() - 1 != i) {
+			out.println("/");
+		}
+	}
+%>

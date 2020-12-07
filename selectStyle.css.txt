@@ -1,0 +1,51 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&display=swap');
+
+#title {
+	font-family: 'Black Han Sans', sans-serif;
+	font-size: 70px;
+}
+
+#content {
+	font-family: 'Nanum Gothic Coding', monospace;
+	font-size: 40px;
+}
+.btn3 {
+  padding: 15px 100px;
+  margin:10px 4px;
+  color: #AC58FA;
+  font-family: 'Black Han Sans', sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  position: relative;
+  text-decoration: none;
+  display:inline-block;
+  font-size: 36px;
+  align-content: center;
+}
+
+.btn3::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: #000;
+  -webkit-transform: scaleX(.3);
+  transform: scaleX(.3);
+  opacity: 0;
+  transition: all .3s;
+}
+
+.btn3:hover::before{
+  opacity: 1;
+  background-color: #F6CEEC;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+  transition: -webkit-transform .6s cubic-bezier(.08, .35, .13, 1.02), opacity .4s;
+  transition: transform .6s cubic-bezier(.08, .35, .13, 1.02), opacity;
+}

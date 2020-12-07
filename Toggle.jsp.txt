@@ -1,0 +1,21 @@
+<%@page import="Dto.MemberVO"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<%
+	request.setCharacterEncoding("UTF-8");
+List<MemberVO> memberList = (List<MemberVO>) request.getAttribute("memberList");
+%>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="./ToggleStyle.css" type="text/css">
+<title>목차 화면</title>
+</head>
+<script src="./ToggleJS.js">
+</script>
+<body>
+	<div id="list">> 목록 보기</div>
+</body>
+</html>
